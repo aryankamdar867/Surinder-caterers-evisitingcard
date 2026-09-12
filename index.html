@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SPHL — 3D Digital Business Card</title>
+  <meta name="description" content="Surinder Prime Hospitality Private Ltd. - 3D Interactive Visiting Card" />
+  <meta name="theme-color" content="#0a0e17" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Caveat:wght@600;700&family=Marcellus&display=swap" rel="stylesheet" />
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="theme-light">
+  
+  <!-- Ambient Lighting Effects -->
+  <div class="ambient-glow glow-gold"></div>
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="mesh-grid"></div>
+
+  <div class="app-container">
+    
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="brand-pill">
+        <div class="brand-badge">SPHL</div>
+        <div class="brand-text">
+          <span class="brand-title">SURINDER PRIME</span>
+          <span class="brand-sub">HOSPITALITY PVT. LTD.</span>
+        </div>
+      </div>
+
+      <!-- Profile Selector Switcher -->
+      <div class="profile-switch-container">
+        <div class="profile-tabs" role="tablist">
+          <button class="profile-tab active" data-profile="arjun" onclick="switchProfile('arjun')">
+            <span class="tab-avatar">AP</span>
+            <span class="tab-name">Arjun</span>
+          </button>
+          <button class="profile-tab" data-profile="girish" onclick="switchProfile('girish')">
+            <span class="tab-avatar">GP</span>
+            <span class="tab-name">Girish</span>
+          </button>
+          <button class="profile-tab" data-profile="javed" onclick="switchProfile('javed')">
+            <span class="tab-avatar">JS</span>
+            <span class="tab-name">Javed</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Icons in Header -->
+      <div class="header-actions">
+        
+        <button class="theme-btn" onclick="toggleTheme()" title="Toggle Atmosphere">
+          <i data-lucide="moon" id="themeIcon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main 3D Card Showcase Stage -->
+    <main class="scene-container" id="sceneContainer">
+      
+      <!-- Interactive 3D Card Rig -->
+      <div class="card-viewport" id="cardViewport">
+        <div class="card-3d" id="card3D">
+          
+          <!-- ================= FRONT FACE ================= -->
+          <div class="card-face card-front" id="cardFrontFace">
+            <!-- Luxury Textured Card Background & Golden Embossed Filigree -->
+            <div class="card-paper-texture"></div>
+            <div class="card-inner-border"></div>
+            <div class="corner-ornament c-tl"></div>
+            <div class="corner-ornament c-tr"></div>
+            <div class="corner-ornament c-bl"></div>
+            <div class="corner-ornament c-br"></div>
+            
+            <!-- Metallic Specular Foil Glare -->
+            <div class="foil-glare" id="frontGlare"></div>
+
+            <!-- Front Content Layout -->
+            <div class="front-layout">
+              
+              <!-- Left Column: SPHL Logo & Corporate Identity -->
+              <div class="front-left">
+                <div class="sphl-logo-wrap">
+                  <h1 class="sphl-logo-text">SPHL</h1>
+                  <div class="diamond-divider">
+                    <span class="line"></span>
+                    <span class="diamond">◆</span>
+                    <span class="line"></span>
+                  </div>
+                  <div class="sphl-company-title">
+                    SURINDER PRIME
+                    <span class="sub">HOSPITALITY PRIVATE LTD.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Center Vertical Gold Divider -->
+              <div class="front-divider">
+                <div class="div-line"></div>
+                <div class="div-diamond">◆</div>
+                <div class="div-line"></div>
+              </div>
+
+              <!-- Right Column: Personal & Contact Information -->
+              <div class="front-right">
+                <div class="person-info">
+                  <h2 class="person-name" id="cardName">ARJUN PANSAREY</h2>
+                  <div class="person-role" id="cardRole">BUSINESS DEVELOPMENT MANAGER</div>
+                </div>
+
+                <div class="contact-details">
+                  <a href="tel:+918452000345" class="contact-row" id="cardPhoneLink">
+                    <div class="contact-icon-bubble">
+                      <i data-lucide="phone"></i>
+                    </div>
+                    <span class="contact-text" id="cardPhoneText">+91 8452000345</span>
+                  </a>
+
+                  <a href="mailto:sales@sphl.in" class="contact-row" id="cardEmailLink">
+                    <div class="contact-icon-bubble">
+                      <i data-lucide="mail"></i>
+                    </div>
+                    <span class="contact-text" id="cardEmailText">sales@sphl.in</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card-footer-hint">
+              <span class="hint-pill"><i data-lucide="move-3d"></i> Drag to Rotate 3D • Tap to Flip</span>
+            </div>
+          </div>
+
+          <!-- ================= BACK FACE ================= -->
+          <div class="card-face card-back" id="cardBackFace">
+            <div class="card-paper-texture"></div>
+            <div class="card-inner-border"></div>
+            <div class="corner-ornament c-tl"></div>
+            <div class="corner-ornament c-tr"></div>
+            <div class="corner-ornament c-bl"></div>
+            <div class="corner-ornament c-br"></div>
+            
+            <div class="foil-glare" id="backGlare"></div>
+
+            <div class="back-layout">
+              
+              <!-- Header: OUR BRANDS with Gold Flourish -->
+              <div class="brands-header">
+                <div class="flourish-line"></div>
+                <h3 class="brands-title">OUR BRANDS</h3>
+                <div class="flourish-line"></div>
+              </div>
+
+              <!-- 4 Corporate Brands Showcase Grid -->
+              <div class="brands-grid">
+                
+                <!-- Brand 1: Khalsa Junction -->
+                <div class="brand-card brand-khalsa">
+                  <div class="brand-mascot-box">
+                    <div class="sardar-avatar">
+                      <svg viewBox="0 0 100 100" class="mascot-svg">
+                        <path d="M22,48 C22,22 34,12 50,12 C66,12 78,22 78,48 C78,58 68,64 50,64 C32,64 22,58 22,48 Z" fill="#b91c1c" />
+                        <circle cx="50" cy="32" r="7" fill="#f59e0b" />
+                        <path d="M28,34 C36,18 64,18 72,34" stroke="#991b1b" stroke-width="4" fill="none" />
+                        <circle cx="50" cy="54" r="17" fill="#fcd34d" />
+                        <circle cx="44" cy="51" r="2.2" fill="#1e293b" />
+                        <circle cx="56" cy="51" r="2.2" fill="#1e293b" />
+                        <path d="M40,57 Q50,66 60,57 Q55,61 50,62 Q45,61 40,57 Z" fill="#1e293b" />
+                        <path d="M36,59 C36,74 64,74 64,59 Z" fill="#1e293b" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="brand-khalsa-content">
+                    <div class="khalsa-logo-pill">
+                      <span class="khalsa-main">Khalsa Junction</span>
+                    </div>
+                    <div class="khalsa-tagline">"Khane ka swaad jo hamesha rahe yaad!"</div>
+                  </div>
+                </div>
+
+                <!-- Brand 2: Surinder Caterers -->
+                <div class="brand-card brand-caterers">
+                  <div class="caterers-badge-visual">
+                    <div class="chef-icon-wrap">
+                      <svg viewBox="0 0 100 100" class="caterer-svg">
+                        <path d="M35,38 C26,38 26,24 35,20 C35,14 44,14 50,17 C56,14 65,14 65,20 C74,24 74,38 65,38 Z" fill="#f97316" stroke="#ea580c" stroke-width="2" />
+                        <path d="M28,42 L72,42 L67,76 L50,86 L33,76 Z" fill="#0f172a" stroke="#f97316" stroke-width="2" />
+                        <text x="50" y="68" font-family="'Cinzel', serif" font-weight="900" font-size="22" fill="#ffffff" text-anchor="middle">SC</text>
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="caterers-info">
+                    <div class="caterers-title">SURINDER CATERERS</div>
+                  </div>
+                </div>
+
+                <!-- Brand 3: Sant Da Chulha -->
+                <div class="brand-card brand-chulha">
+                  <div class="chulha-badge-visual">
+                    <div class="chulha-pot-wrap">
+                      <svg viewBox="0 0 100 100" class="chulha-svg">
+                        <circle cx="50" cy="48" r="32" fill="#0284c7" />
+                        <path d="M35,38 L65,38 C70,38 72,58 65,65 C58,72 42,72 35,65 C28,58 30,38 35,38 Z" fill="#ea580c" stroke="#fef08a" stroke-width="2" />
+                        <path d="M45,28 Q50,22 47,16 M53,28 Q58,22 55,16" stroke="#fef08a" stroke-width="2" stroke-linecap="round" fill="none" />
+                        <ellipse cx="50" cy="38" rx="16" ry="4" fill="#fb923c" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="chulha-info">
+                    <div class="chulha-title">SANT DA CHULHA</div>
+                    <div class="chulha-sub">NORTH INDIAN KITCHEN</div>
+                  </div>
+                </div>
+
+                <!-- Brand 4: Mahalaxmi Khaman Dhokla -->
+                <div class="brand-card brand-dhokla">
+                  <div class="dhokla-box-inner">
+                    <div class="jalaram-pill">|| JAI JALARAM ||</div>
+                    <div class="dhokla-title">Mahalaxmi<br/>Khaman Dhokla</div>
+                    <div class="dhokla-since">(Since 1977)</div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Diamond Divider -->
+              <div class="back-divider-row">
+                <span class="b-line"></span>
+                <span class="b-diamond">◆</span>
+                <span class="b-line"></span>
+              </div>
+
+              <!-- Head Office Footer Info -->
+              <div class="head-office-section">
+                <div class="office-icon-wrap">
+                  <div class="office-pin-bubble">
+                    <i data-lucide="map-pin"></i>
+                  </div>
+                </div>
+                <div class="office-text">
+                  <span class="office-label">HEAD OFFICE</span>
+                  <p class="office-address">
+                    Shop No. 95, Patil Plaza, Mitra Mandal Colony, Pune - 411009
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="card-footer-hint">
+              <span class="hint-pill"><i data-lucide="move-3d"></i> Drag to Rotate 3D • Tap to Flip</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 3D Card Interactive Bar (Flip Card Only) -->
+      <div class="card-controls">
+        <button class="ctrl-btn btn-flip-main" id="flipBtn" onclick="toggleCardFlip()" title="Flip Card (Front / Back)">
+          <i data-lucide="refresh-cw"></i>
+          <span>Flip Card</span>
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Bottom Action Quick Connect Hub -->
+    <footer class="action-hub">
+      <div class="action-hub-inner">
+        
+        <!-- Primary Big Button: Save Contact / vCard -->
+        <button class="btn-save-contact" onclick="downloadVCard()">
+          <div class="btn-save-icon">
+            <i data-lucide="user-plus"></i>
+          </div>
+          <div class="btn-save-text">
+            <span class="main-txt">Save to Phone Contacts</span>
+            <span class="sub-txt">1-Tap Direct vCard (.vcf) Export</span>
+          </div>
+          <div class="btn-save-arrow">
+            <i data-lucide="arrow-down-to-line"></i>
+          </div>
+        </button>
+
+        <!-- Quick Action Buttons Row -->
+        <div class="quick-actions-row">
+          <a href="tel:+918452000345" class="action-tile" id="tileCall" title="Call Now">
+            <div class="tile-icon bg-call">
+              <i data-lucide="phone-call"></i>
+            </div>
+            <span class="tile-label">Call</span>
+          </a>
+
+          <a href="https://wa.me/918452000345?text=Hello%20Arjun,%20pleased%20to%20connect%20with%20you!" target="_blank" class="action-tile" id="tileWhatsapp" title="WhatsApp Message">
+            <div class="tile-icon bg-whatsapp">
+              <i data-lucide="message-circle"></i>
+            </div>
+            <span class="tile-label">WhatsApp</span>
+          </a>
+
+          <a href="mailto:sales@sphl.in" class="action-tile" id="tileEmail" title="Send Email">
+            <div class="tile-icon bg-email">
+              <i data-lucide="send"></i>
+            </div>
+            <span class="tile-label">Email</span>
+          </a>
+
+          <a href="https://maps.google.com/?q=Shop+No.+95,+Patil+Plaza,+Mitra+Mandal+Colony,+Pune+411009" target="_blank" class="action-tile" id="tileMap" title="Office Location">
+            <div class="tile-icon bg-map">
+              <i data-lucide="navigation"></i>
+            </div>
+            <span class="tile-label">Location</span>
+          </a>
+
+          <button class="action-tile" onclick="shareDigitalCard()" title="Share Card Link">
+            <div class="tile-icon bg-share">
+              <i data-lucide="share-2"></i>
+            </div>
+            <span class="tile-label">Share</span>
+          </button>
+        </div>
+
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Toast Notification Pop-up -->
+  <div class="toast-popup" id="toast">Link copied to clipboard!</div>
+
+  <!-- Main JavaScript App -->
+  <script src="app.js"></script>
+</body>
+</html>
